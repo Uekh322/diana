@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Yakupova_Skachki3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Competitions">
+    <Key>
+      <PropertyRef Name="CompetitionID" />
+    </Key>
+    <Property Name="CompetitionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EventDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EventTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Venue" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Races" Relationship="Self.FK__Races__Competiti__4F7CD00D" FromRole="Competitions" ToRole="Races" />
+  </EntityType>
+  <EntityType Name="Horses">
+    <Key>
+      <PropertyRef Name="HorseID" />
+    </Key>
+    <Property Name="HorseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Age" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="OwnerID" Type="Int32" Nullable="false" />
+    <Property Name="Photo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Owners" Relationship="Self.FK__Horses__OwnerID__4BAC3F29" FromRole="Horses" ToRole="Owners" />
+    <NavigationProperty Name="RaceEntries" Relationship="Self.FK_RaceEntries_Horses" FromRole="Horses" ToRole="RaceEntries" />
+  </EntityType>
+  <EntityType Name="Jockeys">
+    <Key>
+      <PropertyRef Name="JockeyID" />
+    </Key>
+    <Property Name="JockeyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Age" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="Rating" Type="Decimal" Precision="5" Scale="2" />
+    <NavigationProperty Name="RaceEntries" Relationship="Self.FK__RaceEntri__Jocke__4CA06362" FromRole="Jockeys" ToRole="RaceEntries" />
+  </EntityType>
+  <EntityType Name="Owners">
+    <Key>
+      <PropertyRef Name="OwnerID" />
+    </Key>
+    <Property Name="OwnerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Horses" Relationship="Self.FK__Horses__OwnerID__4BAC3F29" FromRole="Owners" ToRole="Horses" />
+  </EntityType>
+  <EntityType Name="RaceEntries">
+    <Key>
+      <PropertyRef Name="EntryID" />
+    </Key>
+    <Property Name="EntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RaceID" Type="Int32" Nullable="false" />
+    <Property Name="HorseID" Type="Int32" Nullable="false" />
+    <Property Name="JockeyID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Horses" Relationship="Self.FK_RaceEntries_Horses" FromRole="RaceEntries" ToRole="Horses" />
+    <NavigationProperty Name="Jockeys" Relationship="Self.FK__RaceEntri__Jocke__4CA06362" FromRole="RaceEntries" ToRole="Jockeys" />
+    <NavigationProperty Name="Races" Relationship="Self.FK__RaceEntri__RaceI__4D94879B" FromRole="RaceEntries" ToRole="Races" />
+  </EntityType>
+  <EntityType Name="Races">
+    <Key>
+      <PropertyRef Name="RaceID" />
+    </Key>
+    <Property Name="RaceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RaceNumber" Type="Int32" Nullable="false" />
+    <Property Name="CompetitionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Competitions" Relationship="Self.FK__Races__Competiti__4F7CD00D" FromRole="Races" ToRole="Competitions" />
+    <NavigationProperty Name="RaceEntries" Relationship="Self.FK__RaceEntri__RaceI__4D94879B" FromRole="Races" ToRole="RaceEntries" />
+    <NavigationProperty Name="Results" Relationship="Self.FK_Results_Races" FromRole="Races" ToRole="Results" />
+  </EntityType>
+  <EntityType Name="Results">
+    <Key>
+      <PropertyRef Name="ResultID" />
+    </Key>
+    <Property Name="ResultID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RaceID" Type="Int32" Nullable="false" />
+    <Property Name="Place" Type="Int32" Nullable="false" />
+    <Property Name="EntryID" Type="Int32" />
+    <Property Name="FinishTime" Type="Time" Nullable="false" Precision="7" />
+    <NavigationProperty Name="Races" Relationship="Self.FK_Results_Races" FromRole="Results" ToRole="Races" />
+  </EntityType>
+  <Association Name="FK__Races__Competiti__4F7CD00D">
+    <End Role="Competitions" Type="Self.Competitions" Multiplicity="1" />
+    <End Role="Races" Type="Self.Races" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Competitions">
+        <PropertyRef Name="CompetitionID" />
+      </Principal>
+      <Dependent Role="Races">
+        <PropertyRef Name="CompetitionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Horses__OwnerID__4BAC3F29">
+    <End Role="Owners" Type="Self.Owners" Multiplicity="1" />
+    <End Role="Horses" Type="Self.Horses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Owners">
+        <PropertyRef Name="OwnerID" />
+      </Principal>
+      <Dependent Role="Horses">
+        <PropertyRef Name="OwnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RaceEntries_Horses">
+    <End Role="Horses" Type="Self.Horses" Multiplicity="1" />
+    <End Role="RaceEntries" Type="Self.RaceEntries" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Horses">
+        <PropertyRef Name="HorseID" />
+      </Principal>
+      <Dependent Role="RaceEntries">
+        <PropertyRef Name="HorseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RaceEntri__Jocke__4CA06362">
+    <End Role="Jockeys" Type="Self.Jockeys" Multiplicity="1" />
+    <End Role="RaceEntries" Type="Self.RaceEntries" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Jockeys">
+        <PropertyRef Name="JockeyID" />
+      </Principal>
+      <Dependent Role="RaceEntries">
+        <PropertyRef Name="JockeyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RaceEntri__RaceI__4D94879B">
+    <End Role="Races" Type="Self.Races" Multiplicity="1" />
+    <End Role="RaceEntries" Type="Self.RaceEntries" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Races">
+        <PropertyRef Name="RaceID" />
+      </Principal>
+      <Dependent Role="RaceEntries">
+        <PropertyRef Name="RaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Results_Races">
+    <End Role="Races" Type="Self.Races" Multiplicity="1" />
+    <End Role="Results" Type="Self.Results" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Races">
+        <PropertyRef Name="RaceID" />
+      </Principal>
+      <Dependent Role="Results">
+        <PropertyRef Name="RaceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Yakupova_Skachki3Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Competitions" EntityType="Self.Competitions" />
+    <EntitySet Name="Horses" EntityType="Self.Horses" />
+    <EntitySet Name="Jockeys" EntityType="Self.Jockeys" />
+    <EntitySet Name="Owners" EntityType="Self.Owners" />
+    <EntitySet Name="RaceEntries" EntityType="Self.RaceEntries" />
+    <EntitySet Name="Races" EntityType="Self.Races" />
+    <EntitySet Name="Results" EntityType="Self.Results" />
+    <AssociationSet Name="FK__Races__Competiti__4F7CD00D" Association="Self.FK__Races__Competiti__4F7CD00D">
+      <End Role="Competitions" EntitySet="Competitions" />
+      <End Role="Races" EntitySet="Races" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Horses__OwnerID__4BAC3F29" Association="Self.FK__Horses__OwnerID__4BAC3F29">
+      <End Role="Owners" EntitySet="Owners" />
+      <End Role="Horses" EntitySet="Horses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RaceEntries_Horses" Association="Self.FK_RaceEntries_Horses">
+      <End Role="Horses" EntitySet="Horses" />
+      <End Role="RaceEntries" EntitySet="RaceEntries" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RaceEntri__Jocke__4CA06362" Association="Self.FK__RaceEntri__Jocke__4CA06362">
+      <End Role="Jockeys" EntitySet="Jockeys" />
+      <End Role="RaceEntries" EntitySet="RaceEntries" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RaceEntri__RaceI__4D94879B" Association="Self.FK__RaceEntri__RaceI__4D94879B">
+      <End Role="Races" EntitySet="Races" />
+      <End Role="RaceEntries" EntitySet="RaceEntries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Results_Races" Association="Self.FK_Results_Races">
+      <End Role="Races" EntitySet="Races" />
+      <End Role="Results" EntitySet="Results" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,22 @@
+﻿<Window x:Class="Yakupova_Skachki.AddEditRaceWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Новый заезд" Width="510" SizeToContent="Height" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" FontFamily="Segoe UI" Background="#F6F5EF" Icon="/res/logo.png">
+    <StackPanel Margin="24">
+        <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="26" FontWeight="SemiBold" Foreground="#193F33" Margin="0,0,0,16"/>
+        <Border Background="White" CornerRadius="10" Padding="18,8,18,18">
+            <StackPanel>
+                <TextBlock Text="Соревнование" FontWeight="SemiBold" Foreground="#415B4E" Margin="0,8,0,4"/>
+                <ComboBox Height="34" FontSize="15" VerticalContentAlignment="Center" Name="CbCompetition" DisplayMemberPath="DisplayName" SelectedValuePath="CompetitionID"/>
+                <TextBlock Text="Номер заезда" FontWeight="SemiBold" Foreground="#415B4E" Margin="0,8,0,4"/>
+                <TextBox Height="34" FontSize="15" VerticalContentAlignment="Center" Name="TbRaceNumber"/>
+                <TextBlock Text="Лошадь" FontWeight="SemiBold" Foreground="#415B4E" Margin="0,8,0,4"/>
+                <ComboBox Height="34" FontSize="15" VerticalContentAlignment="Center" Name="CbHorse" DisplayMemberPath="Name" SelectedValuePath="HorseID"/>
+                <TextBlock Text="Жокей" FontWeight="SemiBold" Foreground="#415B4E" Margin="0,8,0,4"/>
+                <ComboBox Height="34" FontSize="15" VerticalContentAlignment="Center" Name="CbJockey" DisplayMemberPath="FullName" SelectedValuePath="JockeyID"/>
+            </StackPanel>
+        </Border>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+            <Button Name="BtnCancel" Content="Отмена" Background="#E3EAE4" Foreground="#284638" MinWidth="90" IsCancel="True" Click="BtnCancel_Click"/>
+            <Button Name="BtnSave" Content="Сохранить" MinWidth="110" IsDefault="True" Click="BtnSave_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

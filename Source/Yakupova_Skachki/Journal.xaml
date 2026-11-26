@@ -1,0 +1,48 @@
+﻿<Window x:Class="Yakupova_Skachki.Journal" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Width="940" Height="680" MinWidth="730" MinHeight="480" WindowStartupLocation="CenterOwner" Background="#F5F5EF" FontFamily="Segoe UI" Icon="/res/logo.png">
+    <Window.Resources>
+        <Style x:Key="Card" TargetType="Border"><Setter Property="Background" Value="White"/><Setter Property="CornerRadius" Value="10"/><Setter Property="Padding" Value="18,13"/><Setter Property="Margin" Value="0,0,0,10"/></Style>
+        <Style x:Key="Section" TargetType="TextBlock"><Setter Property="FontSize" Value="21"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Foreground" Value="#193F33"/></Style>
+    </Window.Resources>
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Background="#193F33" Padding="22,14"><TextBlock Name="Heading" FontSize="27" Foreground="White" FontWeight="SemiBold"/></Border>
+        <Border DockPanel.Dock="Top" Style="{StaticResource Card}" Margin="16,14,16,10">
+            <StackPanel>
+                <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="155"/><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,0,12,0"><TextBlock Text="Дата соревнования"/><DatePicker Name="Day" Height="32" SelectedDateChanged="DateChanged"/></StackPanel>
+                    <StackPanel Grid.Column="1"><TextBlock Text="Заезд"/><ComboBox Name="RacePicker" Height="32" FontSize="15" VerticalContentAlignment="Center" SelectionChanged="RaceChanged" DisplayMemberPath="Label"/></StackPanel>
+                    <Button Grid.Column="2" Content="Все даты" Click="ResetDay" VerticalAlignment="Bottom" Margin="8,0,0,0"/>
+                </Grid>
+                <TextBlock Name="Venue" Foreground="#466553" Margin="0,8,0,0"/>
+            </StackPanel>
+        </Border>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="16,0,16,8">
+            <StackPanel Name="Body">
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <DockPanel><CheckBox Name="Podium" DockPanel.Dock="Right" Content="Только места 1–3" VerticalAlignment="Center" Click="TogglePodium" IsChecked="True"/>
+                            <TextBlock Text="Результаты заезда" Style="{StaticResource Section}"/></DockPanel>
+                        <TextBlock Name="Status" Margin="0,8,0,0" FontSize="15" Foreground="#52675B" TextWrapping="Wrap"/>
+                        <DataGrid Name="Protocol" Margin="0,8,0,0" ColumnWidth="*" SelectionMode="Single" AutoGeneratingColumn="Columns" SelectionChanged="SelectionChangedForAction"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Name="ParticipantsTitle" Style="{StaticResource Section}"/>
+                        <DataGrid Name="Entries" Margin="0,8,0,0" ColumnWidth="*" SelectionMode="Single" AutoGeneratingColumn="Columns" SelectionChanged="SelectionChangedForAction"/>
+                        <TextBlock Name="NoEntries" Margin="0,8,0,0" Text="Участников пока нет."/>
+                        <StackPanel Name="AdminTools" Margin="0,8,0,0">
+                            <StackPanel Name="Assignment"><TextBlock Text="Чтобы указать призёра, выберите место в результатах и участника в списке." TextWrapping="Wrap"/><Button Name="LinkButton" Content="Привязать выбранное место" HorizontalAlignment="Left" Click="Assign"/></StackPanel>
+                            <Expander Name="Editor" Header="Внести результат" Margin="0,6" FontSize="15">
+                                <StackPanel Margin="0,8,0,0"><TextBlock Text="Выберите участника в списке и укажите его результат."/>
+                                    <WrapPanel Margin="0,6,0,0"><StackPanel Margin="0,0,12,0"><TextBlock Text="Место"/><TextBox Name="PlaceInput" Width="70" Height="32" VerticalContentAlignment="Center"/></StackPanel>
+                                        <StackPanel><TextBlock Text="Время (чч:мм:сс)"/><TextBox Name="TimeInput" Width="135" Height="32" VerticalContentAlignment="Center"/></StackPanel>
+                                        <Button VerticalAlignment="Bottom" Content="Сохранить результат" Click="SaveFinish"/></WrapPanel>
+                                </StackPanel>
+                            </Expander>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

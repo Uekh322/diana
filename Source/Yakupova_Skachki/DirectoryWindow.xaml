@@ -1,0 +1,65 @@
+<Window x:Class="Yakupova_Skachki.DirectoryWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Width="1080" Height="650" MinWidth="800" MinHeight="440" WindowStartupLocation="CenterOwner" Background="#F6F5EF" FontFamily="Segoe UI" Icon="/res/logo.png">
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Background="#193F33" Padding="22,14">
+            <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}" FontSize="26" FontWeight="SemiBold" Foreground="White"/>
+        </Border>
+        <Grid Margin="16">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="240"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <Border Background="White" CornerRadius="9" Padding="8">
+                <ListBox Name="People" BorderThickness="0" FontSize="15" SelectionChanged="SelectRecord" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding Label}" Padding="6,7" TextWrapping="Wrap"/></DataTemplate></ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+            <Border Grid.Column="1" Background="White" CornerRadius="9" Margin="12,0,0,0" Padding="18">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top">
+                        <TextBlock Name="PersonName" FontSize="23" Foreground="#193F33" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                        <TextBlock Name="Profile" FontSize="15" Foreground="#4B6557" TextWrapping="Wrap" Margin="0,6,0,18"/>
+                        <TextBlock Name="SectionTitle" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    </StackPanel>
+                    <Grid>
+                        <DataGrid Name="Details" AutoGeneratingColumn="FormatColumn" Background="White" SelectionMode="Single"/>
+                        <ScrollViewer Name="RaceScroll" Visibility="Collapsed" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <ItemsControl Name="RaceCards">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Margin="0,0,5,12" Padding="15,12" Background="#F7F9F5" BorderBrush="#D8E4D9" BorderThickness="1" CornerRadius="8">
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="SemiBold" Foreground="#193F33"/>
+                                                <Grid Margin="0,10,0,0">
+                                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="16"/><ColumnDefinition Width="1.2*"/></Grid.ColumnDefinitions>
+                                                    <StackPanel>
+                                                        <TextBlock Text="Участники" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                                        <ItemsControl ItemsSource="{Binding Participants}">
+                                                            <ItemsControl.ItemTemplate><DataTemplate>
+                                                                <TextBlock Text="{Binding}" FontSize="15" TextWrapping="Wrap" Margin="0,2"/>
+                                                            </DataTemplate></ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="2">
+                                                        <TextBlock Text="Результаты" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                                        <ItemsControl ItemsSource="{Binding Results}">
+                                                            <ItemsControl.ItemTemplate><DataTemplate>
+                                                                <StackPanel Margin="0,2,0,5">
+                                                                    <TextBlock Text="{Binding Finish}" Foreground="#234C38" FontWeight="SemiBold" FontSize="15" TextWrapping="Wrap"/>
+                                                                    <TextBlock Text="{Binding Participant}" Foreground="#526557" TextWrapping="Wrap"/>
+                                                                </StackPanel>
+                                                            </DataTemplate></ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                        <TextBlock Text="Результаты пока не внесены" Visibility="{Binding NoResults}" Foreground="#526557" TextWrapping="Wrap"/>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                        <TextBlock Name="EmptyMessage" Margin="8,48,0,0" Foreground="#516A59" IsHitTestVisible="False"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </DockPanel>
+</Window>
